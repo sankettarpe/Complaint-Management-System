@@ -65,6 +65,10 @@ const complaintSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
       required: true,
+    },  
+    overdueNotified: {
+      type: Boolean,
+      default: false,
     },
   },
   {

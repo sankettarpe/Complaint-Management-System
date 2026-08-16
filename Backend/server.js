@@ -11,8 +11,10 @@ import authRoutes from "./routes/authRoutes.js";
 import adminRoutes from "./routes/adminRoutes.js";
 import superAdminRoutes from "./routes/superAdminRoutes.js";
 import complaintRoutes from "./routes/complaintRoutes.js";
+import notificationRoutes from "./routes/notificationRoutes.js";
 import { protect, authorize } from "./middleware/authMiddleware.js";
 
+import "./jobs/overdueComplaintJob.js";
 dotenv.config();
 
 connectDB();
@@ -50,6 +52,7 @@ app.use("/api/auth",authRoutes);
 app.use("/api/complaints",complaintRoutes);
 app.use("/api/admin",protect,authorize("admin"),adminRoutes);
 app.use("/api/superadmin",protect,authorize("superadmin"),superAdminRoutes);
+app.use("/api/notifications", notificationRoutes);
 
 // app.use("/api/admin", adminRoutes);
 // app.use("/api/super-admin", superAdminRoutes);
