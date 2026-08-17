@@ -2,15 +2,17 @@ import Notification from "../models/Notification.js";
 
 export const getNotifications = async (req, res) => {
   try {
+    console.log("Logged in user:", req.user);
+    console.log("Admin ID:", req.user.id);
     const notifications = await Notification.find({
-      recipient: req.user._id,
+      recipient: req.user.id,
     })
       .populate("complaint", "title location status priority")
       .sort({ createdAt: -1 })
       .limit(20);
 
     const unreadCount = await Notification.countDocuments({
-      recipient: req.user._id,
+      recipient: req.user.id,
       isRead: false,
     });
 

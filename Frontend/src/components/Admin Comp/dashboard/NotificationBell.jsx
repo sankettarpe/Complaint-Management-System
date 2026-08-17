@@ -21,16 +21,17 @@ const NotificationBell = () => {
           headers: {
             Authorization: `Bearer ${token}`,
           },
-        }
+        },
       );
 
       setNotifications(response.data.notifications);
       setUnreadCount(response.data.unreadCount);
       console.log("Fetched Notifications:", response.data.notifications);
+      console.log("Fetched unread:", response.data.unreadCount);
     } catch (error) {
       console.error(
         "Failed to fetch notifications:",
-        error.response?.data || error.message
+        error.response?.data || error.message,
       );
     }
   };
@@ -76,15 +77,13 @@ const NotificationBell = () => {
             headers: {
               Authorization: `Bearer ${token}`,
             },
-          }
+          },
         );
 
         setNotifications((prev) =>
           prev.map((item) =>
-            item._id === notification._id
-              ? { ...item, isRead: true }
-              : item
-          )
+            item._id === notification._id ? { ...item, isRead: true } : item,
+          ),
         );
 
         setUnreadCount((prev) => Math.max(0, prev - 1));
@@ -93,14 +92,12 @@ const NotificationBell = () => {
       setShowNotifications(false);
 
       if (notification.complaint?._id) {
-        navigate(
-          `/admin/complaints/${notification.complaint._id}`
-        );
+        navigate(`/admin/complaints/${notification.complaint._id}`);
       }
     } catch (error) {
       console.error(
         "Failed to update notification:",
-        error.response?.data || error.message
+        error.response?.data || error.message,
       );
     }
   };
@@ -114,21 +111,21 @@ const NotificationBell = () => {
           headers: {
             Authorization: `Bearer ${token}`,
           },
-        }
+        },
       );
 
       setNotifications((prev) =>
         prev.map((notification) => ({
           ...notification,
           isRead: true,
-        }))
+        })),
       );
 
       setUnreadCount(0);
     } catch (error) {
       console.error(
         "Failed to mark notifications as read:",
-        error.response?.data || error.message
+        error.response?.data || error.message,
       );
     }
   };
@@ -137,9 +134,7 @@ const NotificationBell = () => {
     const notificationDate = new Date(date);
     const now = new Date();
 
-    const difference = Math.floor(
-      (now - notificationDate) / 1000
-    );
+    const difference = Math.floor((now - notificationDate) / 1000);
 
     if (difference < 60) {
       return "Just now";
@@ -157,22 +152,37 @@ const NotificationBell = () => {
   };
 
   return (
-    <div
-      className="relative"
-      ref={notificationRef}
-    >
+    <div className="relative" ref={notificationRef}>
       {/* Notification Bell */}
 
       <button
-        onClick={() =>
-          setShowNotifications((prev) => !prev)
-        }
+        onClick={() => setShowNotifications((prev) => !prev)}
         className="relative p-2 rounded-full hover:bg-gray-100 transition"
+        aria-label="Notifications"
       >
         <IoNotificationsOutline className="text-3xl text-gray-700" />
 
         {unreadCount > 0 && (
-          <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold min-w-5 h-5 px-1 rounded-full flex items-center justify-center">
+          <span
+            className="
+        absolute
+        -top-1
+        -right-1
+        min-w-5
+        h-5
+        px-1
+        bg-red-500
+        text-white
+        text-xs
+        font-bold
+        rounded-full
+        flex
+        items-center
+        justify-center
+        border-2
+        border-white
+      "
+          >
             {unreadCount > 99 ? "99+" : unreadCount}
           </span>
         )}
@@ -182,13 +192,10 @@ const NotificationBell = () => {
 
       {showNotifications && (
         <div className="absolute right-0 mt-3 w-96 bg-white rounded-xl shadow-2xl border z-50 overflow-hidden">
-
           {/* Header */}
 
           <div className="flex justify-between items-center px-4 py-3 border-b">
-            <h3 className="font-semibold text-lg">
-              Notifications
-            </h3>
+            <h3 className="font-semibold text-lg">Notifications</h3>
 
             {unreadCount > 0 && (
               <button
@@ -203,7 +210,6 @@ const NotificationBell = () => {
           {/* Notifications */}
 
           <div className="max-h-100 overflow-y-auto">
-
             {notifications.length === 0 ? (
               <div className="p-8 text-center text-gray-500">
                 <IoNotificationsOutline className="text-4xl mx-auto mb-2 text-gray-300" />
@@ -214,30 +220,21 @@ const NotificationBell = () => {
               notifications.map((notification) => (
                 <div
                   key={notification._id}
-                  onClick={() =>
-                    handleNotificationClick(notification)
-                  }
+                  onClick={() => handleNotificationClick(notification)}
                   className={`p-4 border-b cursor-pointer hover:bg-gray-50 transition ${
-                    !notification.isRead
-                      ? "bg-blue-50"
-                      : "bg-white"
+                    !notification.isRead ? "bg-blue-50" : "bg-white"
                   }`}
                 >
-
                   <div className="flex gap-3">
-
                     {/* Notification indicator */}
 
                     <div
                       className={`mt-1 w-2 h-2 rounded-full shrink-0 ${
-                        notification.isRead
-                          ? "bg-gray-300"
-                          : "bg-red-500"
+                        notification.isRead ? "bg-gray-300" : "bg-red-500"
                       }`}
                     />
 
                     <div className="flex-1">
-
                       <p className="font-semibold text-sm">
                         {notification.title}
                       </p>
@@ -255,14 +252,11 @@ const NotificationBell = () => {
                       <p className="text-xs text-gray-400 mt-2">
                         {formatTime(notification.createdAt)}
                       </p>
-
                     </div>
                   </div>
-
                 </div>
               ))
             )}
-
           </div>
         </div>
       )}
