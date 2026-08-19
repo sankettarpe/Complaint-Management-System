@@ -449,3 +449,30 @@ export const assignStaff = async (req, res) => {
     });
   }
 };
+
+export const getComplaintById = async (req, res) => {
+  try {
+    const complaint = await Complaint.findById(req.params.id)
+      .populate("user", "name email")
+      .populate("assignedStaff", "name email");
+
+    if (!complaint) {
+      return res.status(404).json({
+        success: false,
+        message: "Complaint not found.",
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      complaint,
+    });
+  } catch (error) {
+    console.error("Get Complaint Error:", error);
+
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};

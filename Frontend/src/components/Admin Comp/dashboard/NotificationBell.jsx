@@ -92,6 +92,7 @@ const NotificationBell = () => {
       setShowNotifications(false);
 
       if (notification.complaint?._id) {
+        // navigate(`/admin/complaints/${notification.complaint._id}`);
         navigate(`/admin/complaints/${notification.complaint._id}`);
       }
     } catch (error) {

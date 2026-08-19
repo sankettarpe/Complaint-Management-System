@@ -14,6 +14,7 @@ import AdminDashboard from "./pages/admin/AdminDashboard.jsx";
 import StaffData from "./pages/admin/StaffData.jsx";
 import MyComplaints from "./pages/student/MyComplaints.jsx";
 import AllComplaints from "./pages/admin/AllComplaints.jsx";
+import ComplaintDetails from "./pages/admin/ComplaintDetails.jsx";
 import AddStaff from "./pages/admin/AddStaff.jsx";
 import Home from "./pages/Home/Home.jsx";
 
@@ -67,6 +68,10 @@ const router = createBrowserRouter([
   {
     path: "/admin/add-staff",
     element: <AddStaff />,
+  },
+  {
+    path: "/admin/complaints/:id",
+    element: <ComplaintDetails />,
   },
 
   // {

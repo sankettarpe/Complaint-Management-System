@@ -10,6 +10,7 @@ import {
   updateStaff,
   deleteStaff,
   assignStaff,
+  getComplaintById,
 } from "../controllers/adminControllers.js";
 
 const router = express.Router();
@@ -51,6 +52,13 @@ router.put(
     protect,
     authorize("admin","superadmin"),
     assignStaff
+);
+
+router.get(
+  "/complaints/:id",
+  protect,
+  authorize("admin"),
+  getComplaintById
 );
 
 router.post("/add-staff", protect, authorize("admin"), addStaff);

@@ -36,7 +36,7 @@ export const markNotificationAsRead = async (req, res) => {
     const notification = await Notification.findOneAndUpdate(
       {
         _id: req.params.id,
-        recipient: req.user._id,
+        recipient: req.user.id,
       },
       {
         isRead: true,
@@ -72,7 +72,7 @@ export const markAllNotificationsAsRead = async (req, res) => {
   try {
     await Notification.updateMany(
       {
-        recipient: req.user._id,
+        recipient: req.user.id,
         isRead: false,
       },
       {
