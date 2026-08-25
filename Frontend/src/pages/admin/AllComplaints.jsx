@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import AdminLayouts from "../../components/layout/AdminLayout";
 import AssignStaffModal from "./Staff List/AssignStaffModal";
 import Loader from "../../components/common/Loader";
@@ -22,6 +23,7 @@ const AllComplaints = () => {
   const [showAssignModal, setShowAssignModal] = useState(false);
   const [selectedComplaint, setSelectedComplaint] = useState(null);
   const limit = 10;
+  const navigate = useNavigate();
 
   const fetchComplaints = async () => {
     try {
@@ -230,7 +232,9 @@ const AllComplaints = () => {
                     </button>
                   </td>
 
-                  <td className="p-2">{c.title}</td>
+                  <td className="p-2 " onClick={() => navigate(`/admin/complaints/${c._id}`)} style={{ cursor: "pointer" }}>
+                    {c.title}
+                  </td>
                   <td className="p-2">{c.location}</td>
 
                   <td className="p-2">

@@ -37,7 +37,7 @@ const MyComplaints = () => {
 
   return (
     <Layouts>
-      <h1 className="text-2xl font-bold mb-6">My Complaints</h1>
+      <h1 className="text-xl font-bold mb-6 my-2 underline mx-2">My Complaints</h1>
 
       <div className="bg-white p-4 rounded shadow">
         {complaints.length === 0 ? (

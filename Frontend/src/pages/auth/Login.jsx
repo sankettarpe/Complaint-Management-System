@@ -1,6 +1,7 @@
 import React, { useRef } from "react";
 import { RiLockPasswordFill } from "react-icons/ri";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { IoArrowBackSharp } from "react-icons/io5";
 import { FaUser } from "react-icons/fa";
 import { useState } from "react";
 import Loader from "../../components/common/Loader";
@@ -69,6 +70,10 @@ const Login = () => {
     navigate("/register");
   };
 
+  const handleHomepage = () => {
+    navigate("/");
+  };
+
   const ResetPassword = () => {
     navigate("/forget-password");
   };
@@ -81,6 +86,12 @@ const Login = () => {
         onSubmit={handleSubmit}
         className="relative /90 backdrop-blur-md p-10 rounded-2xl shadow-md w-{[450px]}"
       >
+        <p
+          className="text-sm mt-2 text-center hover:underline cursor-pointer text-purple-200"
+          onClick={handleHomepage}
+        >
+          <IoArrowBackSharp className="text-2xl" />
+        </p>
         <h2 className="text-2xl font-bold mb-6 text-center underline pb-10 mx-10 text-white">
           User Login
         </h2>

@@ -94,7 +94,7 @@ const ComplaintDetails = () => {
       setAssigning(true);
 
       const response = await axios.put(
-        `http://localhost:5000/api/admin/complaints/${id}/assign`,
+        `http://localhost:5000/api/admin/assign-staff/${complaint._id}`,
         {
           staffId: selectedStaff,
         },
