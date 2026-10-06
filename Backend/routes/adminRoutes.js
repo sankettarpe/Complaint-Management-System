@@ -11,6 +11,7 @@ import {
   deleteStaff,
   assignStaff,
   getComplaintById,
+  reviewDuplicateComplaint,
 } from "../controllers/adminControllers.js";
 
 const router = express.Router();
@@ -52,6 +53,13 @@ router.put(
     protect,
     authorize("admin","superadmin"),
     assignStaff
+);
+
+router.put(
+  "/review-duplicate/:id",
+  protect,
+  authorize("admin"),
+  reviewDuplicateComplaint
 );
 
 router.get(

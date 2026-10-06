@@ -35,20 +35,17 @@ const ComplaintDetails = () => {
           headers: {
             Authorization: `Bearer ${token}`,
           },
-        }
+        },
       );
 
       setComplaint(response.data.complaint);
     } catch (error) {
       console.error(
         "Failed to fetch complaint:",
-        error.response?.data || error.message
+        error.response?.data || error.message,
       );
 
-      setError(
-        error.response?.data?.message ||
-          "Failed to load complaint."
-      );
+      setError(error.response?.data?.message || "Failed to load complaint.");
     } finally {
       setLoading(false);
     }
@@ -62,14 +59,14 @@ const ComplaintDetails = () => {
           headers: {
             Authorization: `Bearer ${token}`,
           },
-        }
+        },
       );
 
       setStaff(response.data.staff || []);
     } catch (error) {
       console.error(
         "Failed to fetch staff:",
-        error.response?.data || error.message
+        error.response?.data || error.message,
       );
     }
   };
@@ -102,7 +99,7 @@ const ComplaintDetails = () => {
           headers: {
             Authorization: `Bearer ${token}`,
           },
-        }
+        },
       );
 
       setComplaint(response.data.complaint);
@@ -113,13 +110,10 @@ const ComplaintDetails = () => {
     } catch (error) {
       console.error(
         "Failed to assign staff:",
-        error.response?.data || error.message
+        error.response?.data || error.message,
       );
 
-      alert(
-        error.response?.data?.message ||
-          "Failed to assign staff."
-      );
+      alert(error.response?.data?.message || "Failed to assign staff.");
     } finally {
       setAssigning(false);
     }
@@ -136,7 +130,7 @@ const ComplaintDetails = () => {
           headers: {
             Authorization: `Bearer ${token}`,
           },
-        }
+        },
       );
 
       setComplaint(response.data.complaint);
@@ -145,24 +139,20 @@ const ComplaintDetails = () => {
     } catch (error) {
       console.error(
         "Failed to update status:",
-        error.response?.data || error.message
+        error.response?.data || error.message,
       );
 
       alert(
-        error.response?.data?.message ||
-          "Failed to update complaint status."
+        error.response?.data?.message || "Failed to update complaint status.",
       );
     }
   };
-
 
   if (loading) {
     return (
       <AdminLayouts>
         <div className="flex justify-center items-center min-h-100">
-          <p className="text-gray-500 text-lg">
-            Loading complaint...
-          </p>
+          <p className="text-gray-500 text-lg">Loading complaint...</p>
         </div>
       </AdminLayouts>
     );
@@ -172,7 +162,6 @@ const ComplaintDetails = () => {
     return (
       <AdminLayouts>
         <div className="p-6">
-
           <button
             onClick={() => navigate(-1)}
             className="flex items-center gap-2 text-blue-600 mb-6"
@@ -186,24 +175,18 @@ const ComplaintDetails = () => {
               {error || "Complaint not found."}
             </p>
           </div>
-
         </div>
       </AdminLayouts>
     );
   }
 
   const imageUrl = complaint.image
-    ? `http://localhost:5000/${complaint.image.replace(
-        /\\/g,
-        "/"
-      )}`
+    ? `http://localhost:5000/${complaint.image.replace(/\\/g, "/")}`
     : null;
 
   return (
     <AdminLayouts>
-
       <div className="p-4 md:p-6">
-
         <button
           onClick={() => navigate(-1)}
           className="flex items-center gap-2 text-blue-600 hover:text-blue-800 mb-6"
@@ -215,11 +198,8 @@ const ComplaintDetails = () => {
         {/* Page Header */}
 
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
-
           <div>
-            <h1 className="text-3xl font-bold">
-              Complaint Details
-            </h1>
+            <h1 className="text-3xl font-bold">Complaint Details</h1>
 
             <p className="text-gray-500 mt-1">
               Review complaint and take necessary action.
@@ -233,34 +213,25 @@ const ComplaintDetails = () => {
               complaint.status === "Pending"
                 ? "bg-yellow-100 text-yellow-700"
                 : complaint.status === "In Progress"
-                ? "bg-blue-100 text-blue-700"
-                : "bg-green-100 text-green-700"
+                  ? "bg-blue-100 text-blue-700"
+                  : "bg-green-100 text-green-700"
             }`}
           >
             {complaint.status}
           </span>
-
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-
           <div className="lg:col-span-2 space-y-6">
-
             <div className="bg-white rounded-2xl shadow-md p-6">
-
-              <h2 className="text-xl font-bold mb-6">
-                {complaint.title}
-              </h2>
+              <h2 className="text-xl font-bold mb-6">{complaint.title}</h2>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-
                 <div className="flex items-start gap-3">
                   <MdCategory className="text-2xl text-blue-500" />
 
                   <div>
-                    <p className="text-sm text-gray-500">
-                      Category
-                    </p>
+                    <p className="text-sm text-gray-500">Category</p>
 
                     <p className="font-semibold">
                       {complaint.category || "Not specified"}
@@ -272,9 +243,7 @@ const ComplaintDetails = () => {
                   <MdLocationOn className="text-2xl text-red-500" />
 
                   <div>
-                    <p className="text-sm text-gray-500">
-                      Location
-                    </p>
+                    <p className="text-sm text-gray-500">Location</p>
 
                     <p className="font-semibold">
                       {complaint.location || "Not specified"}
@@ -286,19 +255,17 @@ const ComplaintDetails = () => {
                   <MdPriorityHigh className="text-2xl text-orange-500" />
 
                   <div>
-                    <p className="text-sm text-gray-500">
-                      Priority
-                    </p>
+                    <p className="text-sm text-gray-500">Priority</p>
 
                     <p
                       className={`font-semibold ${
                         complaint.priority === "Critical"
                           ? "text-red-600"
                           : complaint.priority === "High"
-                          ? "text-orange-600"
-                          : complaint.priority === "Medium"
-                          ? "text-yellow-600"
-                          : "text-green-600"
+                            ? "text-orange-600"
+                            : complaint.priority === "Medium"
+                              ? "text-yellow-600"
+                              : "text-green-600"
                       }`}
                     >
                       {complaint.priority || "Not specified"}
@@ -310,129 +277,201 @@ const ComplaintDetails = () => {
                   <MdCalendarToday className="text-2xl text-purple-500" />
 
                   <div>
-                    <p className="text-sm text-gray-500">
-                      Submitted On
-                    </p>
+                    <p className="text-sm text-gray-500">Submitted On</p>
 
                     <p className="font-semibold">
                       {complaint.createdAt
-                        ? new Date(
-                            complaint.createdAt
-                          ).toLocaleString()
+                        ? new Date(complaint.createdAt).toLocaleString()
                         : "Not available"}
                     </p>
                   </div>
                 </div>
-
               </div>
 
               <div className="mt-7">
-
-                <h3 className="font-semibold mb-2">
-                  Description
-                </h3>
+                <h3 className="font-semibold mb-2">Description</h3>
 
                 <p className="text-gray-600 bg-gray-50 p-4 rounded-lg">
-                  {complaint.description ||
-                    "No description provided."}
+                  {complaint.description || "No description provided."}
                 </p>
+              </div>
+            </div>
+            {/* ================= AI ANALYSIS ================= */}
+            <div className="bg-white rounded-2xl shadow-md p-6 border border-purple-100">
+              <div className="flex items-center justify-between mb-5">
+                <div>
+                  <div className="flex items-center gap-2">
+                    <span className="text-2xl">🤖</span>
 
+                    <h2 className="text-xl font-bold text-gray-800">
+                      AI Complaint Analysis
+                    </h2>
+                  </div>
+
+                  <p className="text-sm text-gray-500 mt-1">
+                    Analysis generated using the local AI model.
+                  </p>
+                </div>
+
+                {complaint.aiAnalysis?.analyzedAt && (
+                  <span className="text-xs text-gray-400">
+                    Analyzed{" "}
+                    {new Date(complaint.aiAnalysis.analyzedAt).toLocaleString()}
+                  </span>
+                )}
               </div>
 
+              {complaint.aiAnalysis &&
+              (complaint.aiAnalysis.category ||
+                complaint.aiAnalysis.priority ||
+                complaint.aiAnalysis.department ||
+                complaint.aiAnalysis.summary) ? (
+                <>
+                  {/* AI INFORMATION */}
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    {/* CATEGORY */}
+                    <div className="bg-blue-50 rounded-xl p-4">
+                      <p className="text-sm text-gray-500 mb-1">AI Category</p>
+
+                      <p className="font-bold text-blue-700">
+                        {complaint.aiAnalysis.category || "Not available"}
+                      </p>
+                    </div>
+
+                    {/* PRIORITY */}
+                    <div
+                      className={`rounded-xl p-4 ${
+                        complaint.aiAnalysis.priority === "Critical"
+                          ? "bg-red-50"
+                          : complaint.aiAnalysis.priority === "High"
+                            ? "bg-orange-50"
+                            : complaint.aiAnalysis.priority === "Medium"
+                              ? "bg-yellow-50"
+                              : "bg-green-50"
+                      }`}
+                    >
+                      <p className="text-sm text-gray-500 mb-1">AI Priority</p>
+
+                      <p
+                        className={`font-bold ${
+                          complaint.aiAnalysis.priority === "Critical"
+                            ? "text-red-700"
+                            : complaint.aiAnalysis.priority === "High"
+                              ? "text-orange-700"
+                              : complaint.aiAnalysis.priority === "Medium"
+                                ? "text-yellow-700"
+                                : "text-green-700"
+                        }`}
+                      >
+                        {complaint.aiAnalysis.priority || "Not available"}
+                      </p>
+                    </div>
+
+                    {/* DEPARTMENT */}
+                    <div className="bg-purple-50 rounded-xl p-4">
+                      <p className="text-sm text-gray-500 mb-1">
+                        Suggested Department
+                      </p>
+
+                      <p className="font-bold text-purple-700">
+                        {complaint.aiAnalysis.department || "Not available"}
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* AI SUMMARY */}
+                  <div className="mt-5">
+                    <p className="text-sm font-semibold text-gray-700 mb-2">
+                      AI Generated Summary
+                    </p>
+
+                    <div className="bg-gray-50 border border-gray-200 rounded-xl p-4">
+                      <p className="text-gray-700 leading-relaxed">
+                        {complaint.aiAnalysis.summary ||
+                          "No AI summary available."}
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* AI INFORMATION NOTE */}
+                  <div className="mt-5 bg-purple-50 border border-purple-100 rounded-xl p-4">
+                    <p className="text-sm text-purple-800">
+                      <span className="font-semibold">AI assistance:</span> The
+                      category, priority and department are AI-generated
+                      suggestions. The administrator should verify them before
+                      taking action.
+                    </p>
+                  </div>
+                </>
+              ) : (
+                <div className="bg-gray-50 rounded-xl p-6 text-center">
+                  <p className="text-gray-500">
+                    AI analysis is not available for this complaint.
+                  </p>
+                </div>
+              )}
             </div>
 
             <div className="bg-white rounded-2xl shadow-md p-6">
-
-              <h2 className="text-xl font-bold mb-4">
-                Complaint Image
-              </h2>
+              <h2 className="text-xl font-bold mb-4">Complaint Image</h2>
 
               {imageUrl ? (
                 <div className="flex justify-center bg-gray-50 rounded-xl p-4">
-
                   <img
                     src={imageUrl}
                     alt="Complaint"
                     className="max-h-112.5 max-w-full object-contain rounded-lg"
                     onError={(e) => {
-                      console.error(
-                        "Complaint image failed:",
-                        imageUrl
-                      );
+                      console.error("Complaint image failed:", imageUrl);
                       e.currentTarget.style.display = "none";
                     }}
                   />
-
                 </div>
               ) : (
                 <div className="bg-gray-50 rounded-xl p-10 text-center text-gray-500">
                   No image uploaded for this complaint.
                 </div>
               )}
-
             </div>
-
           </div>
 
           <div className="space-y-6">
-
             <div className="bg-white rounded-2xl shadow-md p-6">
-
-              <h2 className="text-xl font-bold mb-5">
-                Submitted By
-              </h2>
+              <h2 className="text-xl font-bold mb-5">Submitted By</h2>
 
               <div className="flex items-center gap-3">
-
                 <div className="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center">
                   <MdPerson className="text-2xl text-blue-600" />
                 </div>
 
                 <div>
-
                   <p className="font-semibold">
-                    {complaint.user?.name ||
-                      "Unknown User"}
+                    {complaint.user?.name || "Unknown User"}
                   </p>
 
                   <p className="text-sm text-gray-500">
-                    {complaint.user?.email ||
-                      "No email available"}
+                    {complaint.user?.email || "No email available"}
                   </p>
-
                 </div>
-
               </div>
-
             </div>
 
             <div className="bg-white rounded-2xl shadow-md p-6">
-
-              <h2 className="text-xl font-bold mb-2">
-                Assign Staff
-              </h2>
+              <h2 className="text-xl font-bold mb-2">Assign Staff</h2>
 
               <p className="text-sm text-gray-500 mb-5">
-                Assign an available staff member to resolve
-                this complaint.
+                Assign an available staff member to resolve this complaint.
               </p>
 
               <select
                 value={selectedStaff}
-                onChange={(e) =>
-                  setSelectedStaff(e.target.value)
-                }
+                onChange={(e) => setSelectedStaff(e.target.value)}
                 className="w-full border rounded-lg p-3 mb-4 focus:outline-none focus:ring-2 focus:ring-blue-400"
               >
-                <option value="">
-                  Select Staff Member
-                </option>
+                <option value="">Select Staff Member</option>
 
                 {staff.map((member) => (
-                  <option
-                    key={member._id}
-                    value={member._id}
-                  >
+                  <option key={member._id} value={member._id}>
                     {member.name}
                   </option>
                 ))}
@@ -443,73 +482,49 @@ const ComplaintDetails = () => {
                 disabled={assigning || !selectedStaff}
                 className="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed"
               >
-                {assigning
-                  ? "Assigning..."
-                  : "Assign Staff"}
+                {assigning ? "Assigning..." : "Assign Staff"}
               </button>
 
               {complaint.assignedStaff && (
                 <div className="mt-5 bg-green-50 p-4 rounded-lg">
-
-                  <p className="text-sm text-gray-500">
-                    Currently Assigned
-                  </p>
+                  <p className="text-sm text-gray-500">Currently Assigned</p>
 
                   <p className="font-semibold text-green-700 mt-1">
-                    {complaint.assignedStaff.name ||
-                      "Staff Assigned"}
+                    {complaint.assignedStaff.name || "Staff Assigned"}
                   </p>
-
                 </div>
               )}
-
             </div>
 
             <div className="bg-white rounded-2xl shadow-md p-6">
-
-              <h2 className="text-xl font-bold mb-4">
-                Update Status
-              </h2>
+              <h2 className="text-xl font-bold mb-4">Update Status</h2>
 
               <div className="space-y-2">
-
                 <button
-                  onClick={() =>
-                    handleStatusUpdate("Pending")
-                  }
+                  onClick={() => handleStatusUpdate("Pending")}
                   className="w-full border border-yellow-400 text-yellow-700 py-2 rounded-lg hover:bg-yellow-50"
                 >
                   Mark as Pending
                 </button>
 
                 <button
-                  onClick={() =>
-                    handleStatusUpdate("In Progress")
-                  }
+                  onClick={() => handleStatusUpdate("In Progress")}
                   className="w-full border border-blue-400 text-blue-700 py-2 rounded-lg hover:bg-blue-50"
                 >
                   Mark as In Progress
                 </button>
 
                 <button
-                  onClick={() =>
-                    handleStatusUpdate("Completed")
-                  }
+                  onClick={() => handleStatusUpdate("Completed")}
                   className="w-full bg-green-600 text-white py-2 rounded-lg hover:bg-green-700"
                 >
                   Mark as Completed
                 </button>
-
               </div>
-
             </div>
-
           </div>
-
         </div>
-
       </div>
-
     </AdminLayouts>
   );
 };

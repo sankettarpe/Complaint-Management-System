@@ -117,6 +117,10 @@ export const getAllComplaints = async (req, res) => {
   try {
     const complaints = await Complaint.find()
       .populate("user", "name email")
+      .populate({
+        path: "duplicateAnalysis.matchedComplaint",
+        select: "title description category location status createdAt",
+      })
       .sort({ createdAt: -1 });
 
     res.json({
@@ -454,7 +458,8 @@ export const getComplaintById = async (req, res) => {
   try {
     const complaint = await Complaint.findById(req.params.id)
       .populate("user", "name email")
-      .populate("assignedStaff", "name email");
+      .populate("assignedStaff", "name email")
+      .populate("assignedBy", "name email");
 
     if (!complaint) {
       return res.status(404).json({
@@ -473,6 +478,48 @@ export const getComplaintById = async (req, res) => {
     res.status(500).json({
       success: false,
       message: error.message,
+    });
+  }
+};
+
+export const reviewDuplicateComplaint = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { decision } = req.body;
+
+    if (!["Duplicate", "Not Duplicate"].includes(decision)) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid duplicate decision",
+      });
+    }
+
+    const complaint = await Complaint.findById(id);
+
+    if (!complaint) {
+      return res.status(404).json({
+        success: false,
+        message: "Complaint not found",
+      });
+    }
+
+    complaint.duplicateAnalysis.adminDecision = decision;
+    complaint.duplicateAnalysis.reviewedBy = req.user.id;
+    complaint.duplicateAnalysis.reviewedAt = new Date();
+
+    await complaint.save();
+
+    res.json({
+      success: true,
+      message: `Complaint marked as ${decision}`,
+      complaint,
+    });
+  } catch (error) {
+    console.error("Duplicate review error:", error);
+
+    res.status(500).json({
+      success: false,
+      message: "Failed to save duplicate decision",
     });
   }
 };
